@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import withValidation from '../../container/withValidation'
 
 import {
     TextField,
@@ -7,36 +8,28 @@ import {
 class CardHolderNameInput extends Component {
 
     constructor(props) {
-        super(props);
+        super(props)
 
-        this.state = {
-            value: ""
-        }
-
-        this.onChange = this.onChange.bind(this);
+        this.handleChange = this.handleChange.bind(this)
     }
 
-    onChange(e) {
-        this.setState({
-            value: e.target.value.replace(/[^a-z ]/gi, '').toUpperCase()
-        })
+    handleChange(e) {
+        e.target.value = e.target.value.replace(/[^a-z ]/gi, "").toUpperCase()
+        this.props.onChange(e)
     }
-    
+
     render() {
 
         return (<TextField
             label="Nombre y apellido"
-            maxLength={80}
             fullWidth
-            helperText="Como figura en el plástico"
+            helperText={this.props.error ? "Completa este dato" : "Como figura en el plástico"}
             spellCheck={false}
-            autoComplete={false}
-            autoCorrect={false}
-            value={this.state.value}
-            onChange={this.onChange}
+            {...this.props}
+            onChange={this.handleChange}
         />)
     }
 
 }
 
-export default CardHolderNameInput
+export default withValidation(value => value.length > 0)(CardHolderNameInput)

@@ -10,20 +10,29 @@ class PaymentForm extends Component {
 
     render() {
 
-        const { classes } = this.props
+        const { 
+            classes,
+            cardBin,
+            cardLogo,
+            paymentMethod 
+        } = this.props
 
         return (
             <div className={classes.formContainer}>
                 <form>
                     <Grid container spacing={16}>
                         <Grid item xs={12}>
-                            <CardNumberInput />
+                            <CardNumberInput 
+                                cardBin={cardBin} 
+                                cardLogo={cardLogo}
+                                paymentMethod={paymentMethod}
+                            />
                         </Grid>
                         <Grid item xs={12} sm={6}>
                             <ExpirationMonthInput />
                         </Grid>
                         <Grid item xs={12} sm={6}>
-                            <CVVInput />
+                            <CVVInput paymentMethod={paymentMethod} />
                         </Grid>
                         <Grid item xs={12}>
                             <CardHolderNameInput />

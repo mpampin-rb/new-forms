@@ -11,7 +11,6 @@ class PaymentSummary extends Component {
     render() {
 
         const { classes } = this.props
-        console.log(classes);
 
         return (
             <Paper className={classes.main} square elevation={0}>

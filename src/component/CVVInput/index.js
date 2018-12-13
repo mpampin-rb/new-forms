@@ -7,23 +7,32 @@ import {
 
 import CVVHelp from '../CVVHelp'
 import MaskInput from '../MaskInput'
+import withValidation from '../../container/withValidation'
 
 class CVVInput extends Component {
 
-    render() {
+    constructor(props) {
+        super(props)
 
-        return (<MaskInput mask="999">
+        // Amex tiene 4 dígitos de CVV
+        this.mask = props.paymentMethod === 65 ? "9999" : "999"
+    }
+
+    render() {
+        return (<MaskInput 
+            mask={this.mask}
+            {...this.props}
+        >
             <TextField
                 label="CVV"
                 type="text"
                 fullWidth
-                helperText="Ingresá los 3 números"
+                helperText={`Ingresá los ${this.mask.length} números`}
                 spellCheck={false}
-                autoComplete={false}
-                autoCorrect={false}
                 InputProps={{
                     endAdornment: <InputAdornment position="end"><CVVHelp /></InputAdornment>
                 }}
+                error={this.props.error}
             />
         </MaskInput>
         )
@@ -31,4 +40,4 @@ class CVVInput extends Component {
 
 }
 
-export default CVVInput
+export default withValidation(value => value.length > 0)(CVVInput)

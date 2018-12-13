@@ -4,21 +4,21 @@ import {
     TextField,
 } from '@material-ui/core'
 import MaskInput from '../MaskInput'
+import withValidation from '../../container/withValidation'
 
 class ExpirationMonthInput extends Component {
 
     render() {
 
         return (
-            <MaskInput mask="99/99">
+            <MaskInput mask="99/99" {...this.props}>
                 <TextField
                     label="Vencimiento"
                     type="text"
                     helperText=" "
                     spellCheck={false}
-                    autoComplete={false}
-                    autoCorrect={false}
                     fullWidth
+                    error={this.props.error}
                 />
             </MaskInput>
         )
@@ -26,4 +26,4 @@ class ExpirationMonthInput extends Component {
 
 }
 
-export default ExpirationMonthInput
+export default withValidation(value => value.length > 0)(ExpirationMonthInput)
