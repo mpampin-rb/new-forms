@@ -14,7 +14,7 @@ class CardHolderNameInput extends Component {
     }
 
     handleChange(e) {
-        e.target.value = e.target.value.replace(/[^a-z ]/gi, "").toUpperCase()
+        e.target.value = e.target.value.replace(/[^a-zñ ]/gi, "").substring(0, 60).toUpperCase()
         this.props.onChange(e)
     }
 

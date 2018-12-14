@@ -13,6 +13,8 @@ const withValidation = (validate) => (ValidableInput) => {
                 valid: true
             }
 
+            props.registerValidation(props.name)
+
             this.validate = validate
             this.handleChange = this.handleChange.bind(this)
             this.handleBlur = this.handleBlur.bind(this)
@@ -27,10 +29,12 @@ const withValidation = (validate) => (ValidableInput) => {
         }
 
         handleBlur() {
+            const isValid = !this.validate || this.validate(this.state.value, this.props)
             this.setState({
                 dirty: true,
-                valid: !this.validate || this.validate(this.state.value)
+                valid: isValid
             })
+            this.props.validate(this.props.name, isValid)
         }
 
         handleFocus() {

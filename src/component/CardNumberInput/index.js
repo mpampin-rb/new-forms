@@ -6,8 +6,11 @@ import {
     withStyles
 } from '@material-ui/core'
 import {
+    getLengthsById,
     formatCardNumber,
-    getMask
+    getMask,
+    validateBin,
+    validateLuhnAlgorithm
 } from './cardsHelper'
 import withValidation from '../../container/withValidation'
 
@@ -20,19 +23,24 @@ class CardNumberInput extends Component {
 
         this.state = {
             value: "",
-            fullValue: this.props.cardBin
+            fullValue: this.props.cardBin,
+            error: false
         }
 
         this.handleChange = this.handleChange.bind(this)
     }
 
     handleChange(e) {
-        e.target.value = e.target.value.replace(/ /g, "")
+        const value = e.target.value.replace(/ /g, "")
+        const fullValue = `${this.props.cardBin}${value}`
+        const error = !validateBin(fullValue, this.props.paymentMethod)
         this.setState({
-            value: e.target.value,
-            fullValue: `${this.props.cardBin}${e.target.value}`
+            value,
+            fullValue,
+            error
         })
-
+        
+        e.target.value = fullValue
         this.props.onChange(e)
     }
 
@@ -47,6 +55,8 @@ class CardNumberInput extends Component {
             endAdornment: <InputAdornment position="end"><img src={cardLogo} /></InputAdornment>
         }
 
+        const error = this.state.error || this.props.error
+
         if(cardBin)
             inputProps.startAdornment = <InputAdornment position="start" className={classes.cardBin}>{formatted.bin}</InputAdornment>
 
@@ -59,6 +69,7 @@ class CardNumberInput extends Component {
                 InputProps={inputProps}
                 fullWidth
                 {...this.props}
+                error={error}
                 value={formatted.restOfCC}
                 onChange={this.handleChange}
             />
@@ -68,4 +79,15 @@ class CardNumberInput extends Component {
 
 }
 
-export default withValidation(value => value.length > 0)(withStyles(style)(CardNumberInput))
+const validation = (value, props) => {
+    
+    const paymentMethod = props.paymentMethod
+    const lengths = getLengthsById(paymentMethod)
+
+    return lengths.includes(value.length) 
+        && validateBin(value, paymentMethod)
+        && validateLuhnAlgorithm(value)
+
+}
+
+export default withValidation(validation)(withStyles(style)(CardNumberInput))

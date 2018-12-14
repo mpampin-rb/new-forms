@@ -9,12 +9,19 @@ import style from './style'
 class PaymentButtons extends Component {
 
     render() {
-        const { classes } = this.props
+        const { classes, hasErrors } = this.props
 
         return (
             <div className={classes.main}>
                 <Button className={classes.cancelButton}>Cancelar</Button>
-                <Button variant="contained" className={classes.payButton} color="primary">Pagar</Button>
+                <Button 
+                    variant="contained" 
+                    className={classes.payButton} 
+                    color="primary"
+                    disabled={hasErrors}
+                >
+                    Pagar
+                </Button>
             </div>
         )
     }

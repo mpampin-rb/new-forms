@@ -9,13 +9,14 @@ import CVVHelp from '../CVVHelp'
 import MaskInput from '../MaskInput'
 import withValidation from '../../container/withValidation'
 
+const isAmex = paymentMethod => paymentMethod === 65
+
 class CVVInput extends Component {
 
     constructor(props) {
         super(props)
 
-        // Amex tiene 4 dígitos de CVV
-        this.mask = props.paymentMethod === 65 ? "9999" : "999"
+        this.mask = isAmex(props.paymentMethod) ? "9999" : "999"
     }
 
     render() {
@@ -40,4 +41,8 @@ class CVVInput extends Component {
 
 }
 
-export default withValidation(value => value.length > 0)(CVVInput)
+const validation = (value, props) => {
+    return isAmex(props.paymentMethod) ? value.length === 4 : value.length === 3
+}
+
+export default withValidation(validation)(CVVInput)

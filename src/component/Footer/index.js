@@ -2,7 +2,6 @@ import React, { Component } from 'react'
 import withStyles from '@material-ui/core/styles/withStyles'
 
 import style from './style'
-import decdLogo from '../../images/templates/sps-footer.png'
 
 class Footer extends Component {
 
@@ -10,7 +9,7 @@ class Footer extends Component {
 
         return (
             <div className={this.props.classes.footer}>
-                <img src={decdLogo} className={this.props.classes.footerImg} />
+                <img src={this.props.formData.decdLogo} className={this.props.classes.footerImg} />
             </div>
         )
 

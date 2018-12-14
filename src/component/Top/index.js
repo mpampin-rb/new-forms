@@ -14,12 +14,12 @@ class Top extends React.Component {
 
     render() {
 
-        const { classes } = this.props
+        const { classes, formData } = this.props
         return <AppBar position="static" className={classes.top}>
                     <Toolbar className={classes.topContainer}>
-                        <Logo />
+                        <Logo src={formData.brandLogo} />
                         <Typography variant="body1" color="inherit" className={classes.title}>
-                            Relojes temporada primavera - verano
+                            {formData.title}
                         </Typography>
                     </Toolbar>
                 </AppBar>

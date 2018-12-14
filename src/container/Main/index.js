@@ -3,9 +3,15 @@ import Top from '../../component/Top'
 import Payment from '../../component/Payment'
 import Footer from '../../component/Footer'
 
+const formData = {
+    brandLogo: "/images/logos/swatch.png",
+    title: "Relojes de swatch",
+    decdLogo: "/images/templates/sps-footer.png"
+}
+
 const paymentData = {
-    cardBin: "444444",
-    paymentMethod: 65,
+    cardBin: "",
+    paymentMethod: 1,
     cardLogo: "/images/cards/generic.svg"
 }
 
@@ -13,9 +19,9 @@ class Main extends Component {
     render() {
         return (
             <React.Fragment>
-                <Top />
+                <Top formData={formData} />
                 <Payment paymentData={paymentData} />
-                <Footer />
+                <Footer formData={formData} />
             </React.Fragment>
         );
     }

@@ -5,6 +5,7 @@ import {
 } from '@material-ui/core'
 import MaskInput from '../MaskInput'
 import withValidation from '../../container/withValidation'
+import moment from 'moment'
 
 class ExpirationMonthInput extends Component {
 
@@ -26,4 +27,9 @@ class ExpirationMonthInput extends Component {
 
 }
 
-export default withValidation(value => value.length > 0)(ExpirationMonthInput)
+const validation = (value) => {
+    return value.match(/^[0-9]{2}\/[0-9]{2}$/)
+        && moment().isBefore(moment(value, "MM/YY").endOf('month'))
+}
+
+export default withValidation(validation)(ExpirationMonthInput)

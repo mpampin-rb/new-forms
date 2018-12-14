@@ -14,7 +14,9 @@ class PaymentForm extends Component {
             classes,
             cardBin,
             cardLogo,
-            paymentMethod 
+            paymentMethod,
+            registerValidation,
+            validate
         } = this.props
 
         return (
@@ -23,19 +25,35 @@ class PaymentForm extends Component {
                     <Grid container spacing={16}>
                         <Grid item xs={12}>
                             <CardNumberInput 
+                                name="cardNumber"
                                 cardBin={cardBin} 
                                 cardLogo={cardLogo}
+                                registerValidation={registerValidation} 
+                                validate={validate}
                                 paymentMethod={paymentMethod}
                             />
                         </Grid>
                         <Grid item xs={12} sm={6}>
-                            <ExpirationMonthInput />
+                            <ExpirationMonthInput
+                                name="expirationMonth"
+                                registerValidation={registerValidation} 
+                                validate={validate}
+                            />
                         </Grid>
                         <Grid item xs={12} sm={6}>
-                            <CVVInput paymentMethod={paymentMethod} />
+                            <CVVInput
+                                name="cvv"
+                                paymentMethod={paymentMethod} 
+                                registerValidation={registerValidation} 
+                                validate={validate}
+                            />
                         </Grid>
                         <Grid item xs={12}>
-                            <CardHolderNameInput />
+                            <CardHolderNameInput 
+                                name="cardHolder"
+                                registerValidation={registerValidation} 
+                                validate={validate}
+                            />
                         </Grid>
                     </Grid>
                 </form>
